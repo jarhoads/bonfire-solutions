@@ -9,7 +9,7 @@ I like to use the console for debugging while I'm working and having the tests r
 
 ### using tester.js
 To use the test, add the script to the html document along with your solution and tests files:
-```
+```html
 <!doctype html>
 	<html lang="en">
    	<head>
@@ -26,14 +26,14 @@ To use the test, add the script to the html document along with your solution an
 ```
 Next, create a test file. This is bonfire2tests.js for my example.
 Each test consists of an array of tests. Each tests is in `[testName,testValue,testShouldBe]` format.
-testName: a name for the test
-testValue: the value that will be tested
-testShouldBe: what the resulting value for testValue should be
+-testName: a name for the test
+-testValue: the value that will be tested
+-testShouldBe: what the resulting value for testValue should be
 
 Next, create a Tester object by creating a var and passing the name of the function being tested and the tests.
 Finally, call the tester function on the Tester object created above to run the tests. 
 An example of the test created for the first summAll test:
-```
+```javascript
 var summAllTests = [
 	["testing sumAll of range 1,4: ",sumAll([1,4]),10],
 	["testing sumAll of range 4,1: ",sumAll([4,1]),10]

@@ -6,8 +6,8 @@ function Tester(testName,tests){
 Tester.prototype.test =  function(val, shouldBe) {
   if (val === shouldBe) { return "pass " + "value: " + val; }
   else {
-    if(typeof(shouldBe) === typeof(val)){ return "type fail " + val + " should be type: " + typeof(shouldBe) + " but got type: " + typeof(val); } 
-    else{ return "fail " + "should be: " + shouldBe + " but got: " + val; }
+    if(typeof(shouldBe) === typeof(val)){ return "fail " + "should be: " + shouldBe + " but got: " + val; } 
+    else{ return "type fail " + val + " should be type: " + typeof(shouldBe) + " but got type: " + typeof(val); }
   }
 }
 

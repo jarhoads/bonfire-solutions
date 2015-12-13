@@ -26,9 +26,9 @@ To use the test, add the script to the html document along with your solution an
 ```
 Next, create a test file. This is bonfire2tests.js for my example.
 Each test consists of an array of tests. Each tests is in `[testName,testValue,testShouldBe]` format.
--testName: a name for the test
--testValue: the value that will be tested
--testShouldBe: what the resulting value for testValue should be
+- testName: a name for the test
+- testValue: the value that will be tested
+- testShouldBe: what the resulting value for testValue should be
 
 Next, create a Tester object by creating a var and passing the name of the function being tested and the tests.
 Finally, call the tester function on the Tester object created above to run the tests. 

@@ -240,9 +240,150 @@ function where(arr, num) {
   else{ return arr.length; }
   
 }
-
+console.log(' ');
+console.log("--- testing where");
 console.log("where test 1: " + tester(where([40, 60], 50),1));
 console.log("where test 2: " + tester(where([10, 20, 30, 40, 50], 30),2));
 console.log("where test 3: " + tester(where([10, 20, 30, 40, 50], 35),3));
 console.log("where test 4: " + tester(where([5, 3, 20, 3], 5),2));
 console.log("where test 5: " + tester(where([2, 5, 10], 15),3));
+
+// i've thought of a few ways to do this
+// this is the "hard" way that uses string methods
+// and calculates the char codes
+function rot13(str) { // LBH QVQ VG!
+ // get the value for A and Z
+ var zVal = 'Z'.charCodeAt(0);
+ var aVal = 'A'.charCodeAt(0);
+ //console.log("aVal: " + aVal + " zVal: " + zVal);
+ var rotString = "";
+ var shiftAmount = 13;
+ 
+ // loop through the values in the string
+ var l = str.length;
+ for(var i = 0; i < l; i++){
+     var code = str.charCodeAt(i);
+     //console.log("code: " + code);
+     if(code < aVal || code > zVal){ rotString += String.fromCharCode(code); }
+     else{
+         code += shiftAmount;
+         if(code <= zVal){ rotString += String.fromCharCode(code); }
+         else{
+            // find out how much code is over zVal
+            var diff = (code - zVal) - 1;
+            // add that to aVal to get the new code
+            //console.log("shifted code: " + code);
+            code = (aVal + diff);
+            //console.log("code: " + code + " diff: " + diff);
+            rotString += String.fromCharCode(code);
+         }
+     
+     }
+     
+ }
+ return rotString;
+}
+console.log(' ');
+console.log("--- testing rot13");
+console.log("rot13 test 1: " + tester(rot13("SERR PBQR PNZC"),"FREE CODE CAMP"));
+console.log("rot13 test 2: " + tester(rot13("SERR CVMMN!"),"FREE PIZZA!"));
+console.log("rot13 test 3: " + tester(rot13("SERR YBIR?"),"FREE LOVE?"));
+console.log("rot13 test 4: " + tester(rot13("GUR DHVPX OEBJA QBT WHZCRQ BIRE GUR YNML SBK."),"THE QUICK BROWN DOG JUMPED OVER THE LAZY FOX."));
+
+// this version uses a lookup table 
+// and just goes through the string converting each character
+// personally, i like this way of doing it
+// it seems pretty straightforward
+function rot13Fast(str){
+    var rotAlphabet = {
+        "A":"N",
+        "B":"O",
+        "C":"P",
+        "D":"Q",
+        "E":"R",
+        "F":"S",
+        "G":"T",
+        "H":"U",
+        "I":"V",
+        "J":"W",
+        "K":"X",
+        "L":"Y",
+        "M":"Z",
+        "N":"A",
+        "O":"B",
+        "P":"C",
+        "Q":"D",
+        "R":"E",
+        "S":"F",
+        "T":"G",
+        "U":"H",
+        "V":"I",
+        "W":"J",
+        "X":"K",
+        "Y":"L",
+        "Z":"M"  
+    };
+    
+    var rotString = "";
+    for(var i = 0; i < str.length; i++){
+        if(rotAlphabet.hasOwnProperty(str.charAt(i))){ rotString += rotAlphabet[str.charAt(i)]; }
+        else{ rotString += str.charAt(i); }
+    }
+    
+    return rotString;
+}
+console.log(' ');
+console.log("--- testing rot13Fast");
+console.log("rot13Fast test 1: " + tester(rot13Fast("SERR PBQR PNZC"),"FREE CODE CAMP"));
+console.log("rot13Fast test 2: " + tester(rot13Fast("SERR CVMMN!"),"FREE PIZZA!"));
+console.log("rot13Fast test 3: " + tester(rot13Fast("SERR YBIR?"),"FREE LOVE?"));
+console.log("rot13Fast test 4: " + tester(rot13Fast("GUR DHVPX OEBJA QBT WHZCRQ BIRE GUR YNML SBK."),"THE QUICK BROWN DOG JUMPED OVER THE LAZY FOX."));
+
+// this version is more "functional"
+// it uses split,map, and join to do the same thing
+// but i'm guessing the function calls add a lot of overhead
+function rot13Functional(str){
+    var rotAlphabet = {
+        "A":"N",
+        "B":"O",
+        "C":"P",
+        "D":"Q",
+        "E":"R",
+        "F":"S",
+        "G":"T",
+        "H":"U",
+        "I":"V",
+        "J":"W",
+        "K":"X",
+        "L":"Y",
+        "M":"Z",
+        "N":"A",
+        "O":"B",
+        "P":"C",
+        "Q":"D",
+        "R":"E",
+        "S":"F",
+        "T":"G",
+        "U":"H",
+        "V":"I",
+        "W":"J",
+        "X":"K",
+        "Y":"L",
+        "Z":"M"  
+    };
+    
+    function rotChar(character){
+        if(rotAlphabet.hasOwnProperty(character)){ return rotAlphabet[character]; }
+        else{ return character; }
+    }
+    
+    var rotString = str.split('').map(rotChar).join('');
+    
+    return rotString;
+}
+console.log(' ');
+console.log("--- testing rot13Functional");
+console.log("rot13Functional test 1: " + tester(rot13Functional("SERR PBQR PNZC"),"FREE CODE CAMP"));
+console.log("rot13Functional test 2: " + tester(rot13Functional("SERR CVMMN!"),"FREE PIZZA!"));
+console.log("rot13Functional test 3: " + tester(rot13Functional("SERR YBIR?"),"FREE LOVE?"));
+console.log("rot13Functional test 4: " + tester(rot13Functional("GUR DHVPX OEBJA QBT WHZCRQ BIRE GUR YNML SBK."),"THE QUICK BROWN DOG JUMPED OVER THE LAZY FOX."));
